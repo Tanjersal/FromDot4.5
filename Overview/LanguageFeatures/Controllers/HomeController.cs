@@ -12,13 +12,21 @@ namespace LanguageFeatures.Controllers
     {
         public IActionResult Index()
         {
-            ShoppingCart cart = new ShoppingCart();
+            ShoppingCart cart = new ShoppingCart()
+            {
+                Products = Product.GetProducts()
+            };
 
-            cart.Products = Product.GetProducts();
+            Product[] productArray =
+            {
+                new Product {Name = "Kayak", Price = 120M},
+                new Product {Name = "Lifejacket", Price = 32.44M}
+            };
 
-            decimal totalCart = cart.TotalPrices(); // extension method
+            decimal totalProductArray = productArray.TotalPrice(); // extension applies to array list
+            decimal totalCart = cart.TotalPrice();
 
-            return View("Index", new string[] { $"{totalCart:C2}" });
+            return View("Index", new string[] { $"Cart Total: {totalCart:C2}", $"Array Total: {totalProductArray:C2}"});
         }
     }
 }

@@ -22,5 +22,22 @@ namespace LanguageFeatures.Models
 
             return total;
         }
+
+
+        /// <summary>
+        /// Extension method derived from all class implementing interface Ienumerable
+        /// </summary>
+        /// <param name="products"></param>
+        /// <returns></returns>
+        public static decimal TotalPrice(this IEnumerable<Product> products)
+        {
+            decimal total = 0;
+            foreach (Product product in products)
+            {
+                total += product?.Price ?? 0;
+            }
+
+            return total;
+        }
     }
 }

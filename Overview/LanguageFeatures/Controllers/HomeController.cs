@@ -21,7 +21,8 @@ namespace LanguageFeatures.Controllers
 
                 string relatedName = product?.Related?.Name ?? "<None>"; // detecting null chain
 
-                results.Add(string.Format("Name: {0}, Price: {1}, Related: {2}", name, price, relatedName));
+                //results.Add(string.Format("Name: {0}, Price: {1}, Related: {2}, Category: {3}", name, price, relatedName, product?.Category));
+                results.Add($"Name: {name}, Price: {price}, Category: {product?.Category}, Related: {relatedName}"); // string interpolation
             }
             return View(results);
         }

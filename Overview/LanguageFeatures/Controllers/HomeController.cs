@@ -12,31 +12,13 @@ namespace LanguageFeatures.Controllers
     {
         public IActionResult Index()
         {
-            object[] data = new object[]
-            {
-                275M,
-                29.31M,
-                12.09M, 
-                "apple",
-                100, 
-                20
-            };
+            ShoppingCart cart = new ShoppingCart();
 
-            decimal total = 0;
-            for (int i = 0; i < data.Length; i++)
-            {
-                switch(data[i])
-                {
-                    case decimal decimalValue:
-                        total = total + decimalValue;
-                        break;
-                    case int intValue when intValue > 50:
-                        total = total + intValue;
-                        break;
-                }
-            }
+            cart.Products = Product.GetProducts();
 
-            return View("Index", new string[] { $"Total: {total:C2}" });
+            decimal totalCart = cart.TotalPrices(); // extension method
+
+            return View("Index", new string[] { $"{totalCart:C2}" });
         }
     }
 }

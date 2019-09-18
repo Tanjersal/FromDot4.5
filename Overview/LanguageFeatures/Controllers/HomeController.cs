@@ -12,19 +12,31 @@ namespace LanguageFeatures.Controllers
     {
         public IActionResult Index()
         {
-            List<string> results = new List<string>();
-
-            foreach (Product product in Product.GetProducts())
+            object[] data = new object[]
             {
-                string name = product?.Name ?? "<No Name>"; //combining conditional and coalescent
-                decimal? price = product?.Price ?? 0;
+                275M,
+                29.31M,
+                12.09M, 
+                "apple",
+                100, 
+                20
+            };
 
-                string relatedName = product?.Related?.Name ?? "<None>"; // detecting null chain
-
-                //results.Add(string.Format("Name: {0}, Price: {1}, Related: {2}, Category: {3}", name, price, relatedName, product?.Category));
-                results.Add($"Name: {name}, Price: {price}, Category: {product?.Category}, Related: {relatedName}"); // string interpolation
+            decimal total = 0;
+            for (int i = 0; i < data.Length; i++)
+            {
+                switch(data[i])
+                {
+                    case decimal decimalValue:
+                        total = total + decimalValue;
+                        break;
+                    case int intValue when intValue > 50:
+                        total = total + intValue;
+                        break;
+                }
             }
-            return View(results);
+
+            return View("Index", new string[] { $"Total: {total:C2}" });
         }
     }
 }

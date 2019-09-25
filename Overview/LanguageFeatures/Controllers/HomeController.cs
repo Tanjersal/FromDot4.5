@@ -11,6 +11,12 @@ namespace LanguageFeatures.Controllers
     {
         public IActionResult Index()
         {
+            //lambda func
+            bool FilterByPriceUsingLambda(Product p)
+            {
+                return ((p?.Price ?? 0) >= 20);
+            }
+
             ShoppingCart cart = new ShoppingCart()
             {
                 Products = Product.GetProducts()
@@ -26,9 +32,11 @@ namespace LanguageFeatures.Controllers
             decimal totalProductArray = productArray.TotalPrice(); // extension applies to array list
             decimal totalCart = cart.TotalPrice();
 
+            decimal lambdaTotal = productArray.FilterByPriceLambda(FilterByPriceUsingLambda).TotalPrice(); //using lambda 
+
             decimal yieldedTotalPrice = productArray.FilterByPrice(700).TotalPrice();
 
-            return View("Index", new string[] { $"Total filter: {yieldedTotalPrice:C2}" });
+            return View("Index", new string[] { $"Total filter: {yieldedTotalPrice:C2}, Lambda total: {lambdaTotal:C2}"});
 
             //return View("Index", new string[] { $"Cart Total: {totalCart:C2}", $"Array Total: {totalProductArray:C2}"});
         }

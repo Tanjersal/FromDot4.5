@@ -57,5 +57,21 @@ namespace LanguageFeatures.Models
                 }
             }
         }
+
+        /// <summary>
+        /// Filter using lambda expression
+        /// </summary>
+        /// <param name="products"></param>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static IEnumerable<Product> FilterByPriceLambda(this IEnumerable<Product> 
+            products, Func<Product, bool> func)
+        {
+            foreach (Product product in products)
+            {
+                if (func(product)) yield return product;
+            }
+
+        }
     }
 }

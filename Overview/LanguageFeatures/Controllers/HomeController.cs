@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LanguageFeatures.Models;
 
-
 namespace LanguageFeatures.Controllers
 {
     public class HomeController : Controller
@@ -20,13 +19,18 @@ namespace LanguageFeatures.Controllers
             Product[] productArray =
             {
                 new Product {Name = "Kayak", Price = 120M},
-                new Product {Name = "Lifejacket", Price = 32.44M}
+                new Product {Name = "Lifejacket", Price = 32.44M},
+                new Product { Name = "Toyota Rav4", Price = 900.40M}
             };
 
             decimal totalProductArray = productArray.TotalPrice(); // extension applies to array list
             decimal totalCart = cart.TotalPrice();
 
-            return View("Index", new string[] { $"Cart Total: {totalCart:C2}", $"Array Total: {totalProductArray:C2}"});
+            decimal yieldedTotalPrice = productArray.FilterByPrice(700).TotalPrice();
+
+            return View("Index", new string[] { $"Total filter: {yieldedTotalPrice:C2}" });
+
+            //return View("Index", new string[] { $"Cart Total: {totalCart:C2}", $"Array Total: {totalProductArray:C2}"});
         }
     }
 }

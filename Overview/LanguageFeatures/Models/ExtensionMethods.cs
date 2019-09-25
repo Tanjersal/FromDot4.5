@@ -39,5 +39,23 @@ namespace LanguageFeatures.Models
 
             return total;
         }
+
+
+        /// <summary>
+        /// Filter by price using yield
+        /// </summary>
+        /// <param name="products"></param>
+        /// <param name="price"></param>
+        /// <returns></returns>
+        public static IEnumerable<Product> FilterByPrice(this IEnumerable<Product> products, decimal price)
+        {
+            foreach (Product product in products)
+            {
+                if((product?.Price ?? 0) >= price)
+                {
+                    yield return product;
+                }
+            }
+        }
     }
 }

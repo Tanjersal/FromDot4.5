@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model Product[]
 
 @{ ViewBag.Title = "Product Name"; }
 
@@ -9,29 +9,23 @@
     <title>Index</title>
 </head>
 <body>
-    <p>
-        Product Name: @Model.Name
-    </p>
-    <p>
-        Product Price: @($"{Model.Price:C2}")
-    </p>
-    <p>
-        Stock Level: 
-        @switch(ViewBag.StockLevel)
-        {
-            case 0:
-                @:Out of stock
-                break;
-            case 1:
-            case 2:
-            case 3:
-                <strong>Low stock: @ViewBag.StockLevel</strong>
-                break;
-            default:
-                @: @ViewBag.StockLevel in stock.
-                break;
-        }
-    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Product product in Model)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@($"{product.Price:C2}")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </body>
 </html>
 

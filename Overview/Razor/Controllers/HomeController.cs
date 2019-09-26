@@ -11,18 +11,15 @@ namespace Razor.Controllers
     {
         public IActionResult Index()
         {
-            Product kayak = new Product
+            Product[] products =
             {
-                Name = "Kayak",
-                Price = 275M,
-                Description = "Boat for one person",
-                ProductID = 1,
-                Category = "WaterSports"
+                new Product { Name = "Kayak", Price = 275M},
+                new Product { Name = "Toyota corrola", Price = 999M},
+                new Product {Name = "Samsung TV", Price = 143M}
             };
 
-            ViewBag.StockLevel = 5;
 
-            return View(kayak);
+            return View(products);
         }
     }
 }

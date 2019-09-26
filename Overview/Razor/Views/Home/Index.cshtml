@@ -1,0 +1,37 @@
+﻿@model Product
+
+@{ ViewBag.Title = "Product Name"; }
+
+<!Doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        Product Name: @Model.Name
+    </p>
+    <p>
+        Product Price: @($"{Model.Price:C2}")
+    </p>
+    <p>
+        Stock Level: 
+        @switch(ViewBag.StockLevel)
+        {
+            case 0:
+                @:Out of stock
+                break;
+            case 1:
+            case 2:
+            case 3:
+                <strong>Low stock: @ViewBag.StockLevel</strong>
+                break;
+            default:
+                @: @ViewBag.StockLevel in stock.
+                break;
+        }
+    </p>
+</body>
+</html>
+

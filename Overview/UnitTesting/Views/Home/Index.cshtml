@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Product>
+
+@{ Layout = null;}
+
+<!Doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unit Testing</title>
+    <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+    <h1 class="text-center">Products</h1>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Product p in Model)
+            {
+                <tr>
+                    <td>@p.Name</td>
+                    <td>@p.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a asp-action="AddProduct" class="btn btn-success">Add a product</a>
+    </div>
+</body>
+</html>

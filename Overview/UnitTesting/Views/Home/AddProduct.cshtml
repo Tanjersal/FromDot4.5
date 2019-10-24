@@ -1,0 +1,28 @@
+﻿@model Product
+@{
+    Layout = null;
+}
+
+<!Doctype html>
+<html>
+<head>
+    <title>Add Product</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css"/>
+</head>
+<body>
+    <form asp-action="AddProduct" method="post">
+        <div class="form-group">
+            <label asp-for="Name">Name:</label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Price">Price:</label>
+            <input asp-for="Price" class="form-control" />
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</body>
+</html>

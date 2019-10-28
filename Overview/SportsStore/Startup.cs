@@ -50,6 +50,7 @@ namespace SportsStore
                 );
             });
 
+            SeedData.EnsurePopulated(app); //populate db
         }
     }
 }

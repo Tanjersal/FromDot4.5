@@ -10,6 +10,7 @@ namespace SportsStore.Controllers
     public class ProductController : Controller
     {
         private IProductRepository repository; // repository for DI
+        public int pageSize = 4;
 
         /// <summary>
         /// Constructor
@@ -24,6 +25,9 @@ namespace SportsStore.Controllers
         /// List controller
         /// </summary>
         /// <returns></returns>
-        public ViewResult List() => View(repository.Products);
+        public ViewResult List(int productPage = 1)
+        {
+            return View(repository.Products.OrderBy(x => x.ProductID).Skip((productPage - 1) * pageSize).Take(pageSize));
+        }
     }
 }

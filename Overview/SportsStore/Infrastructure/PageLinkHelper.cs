@@ -37,6 +37,9 @@ namespace SportsStore.Infrastructure
 
         public string PageClassSelected { get; set; }
 
+        [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
+        public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
+
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
@@ -46,7 +49,10 @@ namespace SportsStore.Infrastructure
             for (int i=1; i<= PageModel.TotalPages; i++)
             {
                 TagBuilder tag = new TagBuilder("a");
-                tag.Attributes["href"] = urlHelper.Action(PageAction, new { productPage = i });
+                PageUrlValues["productPage"] = i;
+
+                //tag.Attributes["href"] = urlHelper.Action(PageAction, new { productPage = i });
+                tag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
 
                 if(PageClassesEnabled == true)
                 {

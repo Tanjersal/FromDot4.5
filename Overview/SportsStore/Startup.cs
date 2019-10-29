@@ -44,12 +44,37 @@ namespace SportsStore
             app.UseStaticFiles();
             app.UseMvc(routes =>
             {
+                // /Category/Page2
+                routes.MapRoute(
+                    name: null,
+                    template: "{category}/{productPage:int}",
+                    defaults: new { controller = "Product", action = "List"}
+                );
+                // /Page2
+                routes.MapRoute(
+                    name: null,
+                    template: "Page{productPage:int}",
+                    defaults: new { controller = "Product", action = "List", productPage = 1}
+                );
+
+                // /Soccer
+                routes.MapRoute(
+                    name: null,
+                    template: "{Category}",
+                    defaults: new { controller = "Product", action = "List", productPage = 1}
+                );
 
                 routes.MapRoute(
-                    name: "pagination",
-                    template: "Products/Page{productPage}",
-                    defaults: new { Controller = "Product", action = "List" }
+                    name: null,
+                    template: "",
+                    defaults: new { controller = "Product", action = "List", productPage = 1}
                 );
+
+                //routes.MapRoute(
+                //    name: "pagination",
+                //    template: "Products/Page{productPage}",
+                //    defaults: new { Controller = "Product", action = "List" }
+                //);
 
                 routes.MapRoute(
                     name: "default", 

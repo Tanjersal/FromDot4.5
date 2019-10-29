@@ -31,7 +31,7 @@ namespace SportsStoreTests
             //act
             ProductController controller = new ProductController(mock.Object);
             controller.pageSize = 3;
-            IEnumerable<Product> result = controller.List(2).ViewData.Model as IEnumerable<Product>;
+            IEnumerable<Product> result = controller.List(null, 2).ViewData.Model as IEnumerable<Product>;
 
             //assert
             Product[] products = result.ToArray();
@@ -61,7 +61,7 @@ namespace SportsStoreTests
             controller.pageSize = 3;
 
             //act
-            ProductListViewModel productListViewModel = controller.List(2).Model as ProductListViewModel;
+            ProductListViewModel productListViewModel = controller.List(null, 2).Model as ProductListViewModel;
 
             //assert
             PageInfo pageInfo = productListViewModel.PagingInfo;
@@ -69,6 +69,39 @@ namespace SportsStoreTests
             Assert.Equal(3, pageInfo.ItemsPerPage);
             Assert.Equal(5, pageInfo.TotalItems);
             Assert.Equal(2, pageInfo.TotalPages);
+        }
+
+
+        /// <summary>
+        /// Filter by category
+        /// </summary>
+        [Fact]
+        public void Can_FilterByCategory()
+        {
+            //arrange
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(x => x.Products).Returns((new Product[]
+            {
+                new Product { Name = "P1", Category = "Cat1"},
+                new Product { Name = "P2", Category = "Cat2"},
+                new Product { Name = "P3", Category = "Cat3"},
+                new Product { Name = "P4", Category = "Cat3"},
+                new Product { Name = "P5", Category = "Cat3"}
+
+            }).AsQueryable());
+
+            //act
+            ProductController controller = new ProductController(mock.Object);
+            controller.pageSize = 3;
+
+            Product[] products = (controller.List("Cat3", 1).ViewData.Model as ProductListViewModel)
+                .Products.ToArray();
+
+            //Assert
+            Assert.Equal(3, products.Length);
+            Assert.True(products[0].Name == "P3" && products[0].Category == "Cat3");
+            Assert.True(products[1].Name == "P4" && products[0].Category == "Cat3");
+            Assert.True(products[2].Name == "P5" && products[0].Category == "Cat3");
         }
     }
 }

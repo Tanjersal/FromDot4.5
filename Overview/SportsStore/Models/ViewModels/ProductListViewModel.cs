@@ -9,5 +9,6 @@ namespace SportsStore.Models.ViewModels
     {
         public IEnumerable<Product> Products { get; set; } //list of products
         public PageInfo PagingInfo { get; set; } //paging model
+        public string CurrentCategory { get; set; } //selected category
     }
 }

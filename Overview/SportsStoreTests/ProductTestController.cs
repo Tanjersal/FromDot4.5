@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.ViewComponents;
 using System.Text;
 using Xunit;
 using Moq;
@@ -7,6 +8,8 @@ using SportsStore.Models;
 using System.Linq;
 using SportsStore.Controllers;
 using SportsStore.Models.ViewModels;
+using SportsStore.Components;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SportsStoreTests
 {
@@ -102,6 +105,75 @@ namespace SportsStoreTests
             Assert.True(products[0].Name == "P3" && products[0].Category == "Cat3");
             Assert.True(products[1].Name == "P4" && products[0].Category == "Cat3");
             Assert.True(products[2].Name == "P5" && products[0].Category == "Cat3");
+        }
+
+
+        /// <summary>
+        /// Indicate the selected category
+        /// </summary>
+        [Fact]
+        public void Indicates_Selected_Category()
+        {
+            // arrange
+            string selectedCategory = "Apples";
+
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(x => x.Products).Returns((new Product[]
+            {
+                new Product { ProductID = 1, Category = "Apples"},
+                new Product { ProductID = 3, Category = "Oranges"}
+
+            }).AsQueryable());
+
+            //act
+            NavigationMenuViewComponent target = new NavigationMenuViewComponent(mock.Object);
+
+            //get route data through viewComponent
+            target.ViewComponentContext = new ViewComponentContext()
+            {
+                ViewContext = new Microsoft.AspNetCore.Mvc.Rendering.ViewContext
+                {
+                    RouteData = new Microsoft.AspNetCore.Routing.RouteData()
+                }
+            };
+
+            target.RouteData.Values["Category"] = selectedCategory;
+
+            string result = (target.Invoke() as ViewViewComponentResult).ViewData["selectedCategory"].ToString();
+
+            //assert
+            Assert.Equal(selectedCategory, result);
+        }
+
+
+        /// <summary>
+        /// Can generate right products and category count
+        /// </summary>
+        [Fact]
+        public void Generate_Category_Specific_Count()
+        {
+            //arrange
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(x => x.Products).Returns((new Product[] 
+            {
+                new Product { ProductID = 1, Category = "Apples"},
+                new Product { ProductID = 2, Category = "Oranges"},
+                new Product { ProductID = 3, Category = "Apples"},
+                new Product { ProductID = 4, Category = "Apples"},
+                new Product { ProductID = 5, Category = "Oranges"}
+
+            }).AsQueryable());
+
+            //act
+            ProductController controller = new ProductController(mock.Object);
+            controller.pageSize = 3;
+
+            Func<ViewResult, ProductListViewModel> GetModel = result => result?.ViewData?.Model as ProductListViewModel;
+
+            ProductListViewModel returnedViewModel = GetModel(controller.List("Apples", 1));
+
+            //Assert
+            Assert.Equal(3, returnedViewModel.Products.Count());
         }
     }
 }

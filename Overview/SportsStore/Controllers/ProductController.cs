@@ -33,13 +33,15 @@ namespace SportsStore.Controllers
                 Products = repository.Products
                 .Where(x => x.Category == null || x.Category == category)
                 .OrderBy(x => x.ProductID)
-                .Skip((productPage -1) * pageSize)
+                .Skip((productPage - 1) * pageSize)
                 .Take(pageSize),
                 PagingInfo = new PageInfo
                 {
                     CurrentPage = productPage,
                     ItemsPerPage = pageSize,
-                    TotalItems = repository.Products.Count()
+                    TotalItems = category == null ? 
+                    repository.Products.Count() : 
+                    repository.Products.Where(x => x.Category == category).Count()
                 },
                 CurrentCategory = category
             });

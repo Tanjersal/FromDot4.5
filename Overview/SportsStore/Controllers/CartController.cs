@@ -12,10 +12,12 @@ namespace SportsStore.Controllers
     public class CartController : Controller
     {
         private IProductRepository productRepository;
+        private Cart _cart;
 
-        public CartController(IProductRepository repository)
+        public CartController(IProductRepository repository, Cart cartService)
         {
             productRepository = repository;
+            _cart = cartService;
         }
 
         /// <summary>
@@ -27,7 +29,7 @@ namespace SportsStore.Controllers
         {
             return View(new CartIndexViewModel
             {
-                cart = GetCart(),
+                cart = _cart,
                 ReturnUrl = returnUrl
             });
         }
@@ -47,9 +49,7 @@ namespace SportsStore.Controllers
 
             if(product != null)
             {
-                Cart cart = GetCart();
-                cart.AddItem(1, product);
-                SaveCart(cart);
+                _cart.AddItem(1, product);
             }
 
             return RedirectToAction("Index", new { returnUrl });
@@ -67,34 +67,32 @@ namespace SportsStore.Controllers
 
             if(product != null)
             {
-                Cart cart = GetCart();
-                cart.RemoveLineItem(product);
-                SaveCart(cart);
+                _cart.RemoveLineItem(product);
             }
 
             return RedirectToAction("Index", new { returnUrl });
         }
 
 
-        /// <summary>
-        /// Get user cart in session
-        /// </summary>
-        /// <returns></returns>
-        private Cart GetCart()
-        {
-            Cart cart = HttpContext.Session.GetJson<Cart>("Cart") ?? new Cart();
-            return cart;
-        }
+        ///// <summary>
+        ///// Get user cart in session
+        ///// </summary>
+        ///// <returns></returns>
+        //private Cart GetCart()
+        //{
+        //    Cart cart = HttpContext.Session.GetJson<Cart>("Cart") ?? new Cart();
+        //    return cart;
+        //}
 
 
-        /// <summary>
-        /// Set user cart in session
-        /// </summary>
-        /// <param name="cart"></param>
-        private void SaveCart(Cart cart)
-        {
-            HttpContext.Session.SetJson("Cart", cart);
-        }
+        ///// <summary>
+        ///// Set user cart in session
+        ///// </summary>
+        ///// <param name="cart"></param>
+        //private void SaveCart(Cart cart)
+        //{
+        //    HttpContext.Session.SetJson("Cart", cart);
+        //}
 
     }
 }

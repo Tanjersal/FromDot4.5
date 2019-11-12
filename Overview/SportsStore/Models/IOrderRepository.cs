@@ -8,6 +8,6 @@ namespace SportsStore.Models
     public interface IOrderRepository
     {
         IQueryable<Order> Orders { get; }
-        void SaveOrders(Order order);
+        void SaveOrder(Order order);
     }
 }

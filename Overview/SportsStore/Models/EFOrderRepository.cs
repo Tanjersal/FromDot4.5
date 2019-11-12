@@ -24,7 +24,7 @@ namespace SportsStore.Models
         /// Saving order
         /// </summary>
         /// <param name="order">new order</param>
-        public void SaveOrders(Order order)
+        public void SaveOrder(Order order)
         {
             dbContext.AttachRange(order.Lines.Select(l => l.Product));
 

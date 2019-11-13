@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models;
 
@@ -47,18 +45,18 @@ namespace SportsStore.Controllers
                 return View(order);
         }
 
-
         public ViewResult Completed()
         {
             cart.ClearLine();
             return View();
         }
 
-
         /// <summary>
         /// List unshipped orders
         /// </summary>
         /// <returns></returns>
+        /// 
+        [Authorize]
         public ViewResult List()
         {
             return View(repository.Orders.Where(x => !x.Shipped));
@@ -69,6 +67,8 @@ namespace SportsStore.Controllers
         /// </summary>
         /// <param name="OrderID"></param>
         /// <returns></returns>
+        /// 
+        [Authorize]
         public IActionResult MarkShipped(int OrderID)
         {
             Order order = repository.Orders.FirstOrDefault(x => x.OrderID == OrderID);

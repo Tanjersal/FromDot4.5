@@ -14,5 +14,10 @@ namespace SportsStore.Models
             new Product { Name = "Running shoes", Price = 95}
 
         }.AsQueryable();
+
+        public void SaveProduct(Product product)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace SportsStore.Models
         //allows for better db queries (always convert to toList or 
        // toArray avoid multiple db calls) vs IEnumerable
 
-        IQueryable<Product> Products { get; } 
+        IQueryable<Product> Products { get; }
+        void SaveProduct(Product product);
     }
 }

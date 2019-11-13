@@ -53,5 +53,32 @@ namespace SportsStore.Controllers
             cart.ClearLine();
             return View();
         }
+
+
+        /// <summary>
+        /// List unshipped orders
+        /// </summary>
+        /// <returns></returns>
+        public ViewResult List()
+        {
+            return View(repository.Orders.Where(x => !x.Shipped));
+        }
+
+        /// <summary>
+        /// Set order to shipped status
+        /// </summary>
+        /// <param name="OrderID"></param>
+        /// <returns></returns>
+        public IActionResult MarkShipped(int OrderID)
+        {
+            Order order = repository.Orders.FirstOrDefault(x => x.OrderID == OrderID);
+            if(order != null)
+            {
+                order.Shipped = true;
+                repository.SaveOrder(order);
+            }
+
+            return RedirectToAction(nameof(List));
+        }
     }
 }

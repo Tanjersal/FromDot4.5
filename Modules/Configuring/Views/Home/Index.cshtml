@@ -1,19 +1,20 @@
 ﻿@model Dictionary<string, string>
 
-@{ 
-    Layout = "null";
+@{
+    Layout = null;
 }
 
-<!Doctype html>
+<!DOCTYPE html>
+
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link asp-href-include="/lib/bootstrap/css/*.min.css" rel="stylesheet" />
-    <title>Result</title>
+    <meta name="viewport" content="width=device-width" />
+    <link asp-href-include="lib/bootstrap/css/*.min.css" rel="stylesheet" />
+    <title>Index</title>
 </head>
-<body class="p-1">
-    <table class="table table-striped table-bordered">
-        @foreach(var kvp in Model)
+<body>
+    <table class="table table-bordered table-striped">
+        @foreach (var kvp in Model)
         {
             <tr>
                 <td>@kvp.Key</td>
@@ -23,4 +24,3 @@
     </table>
 </body>
 </html>
-

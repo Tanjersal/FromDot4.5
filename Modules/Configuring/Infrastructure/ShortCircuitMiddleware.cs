@@ -17,8 +17,7 @@ namespace Configuring.Infrastructure
 
         public async Task Invoke(HttpContext httpContext)
         {
-            if (httpContext.Request.Headers["User-Agent"]
-                .Any(x => x.ToLower().Contains("edge")))
+            if (httpContext.Items["EdgeBrowser"] as bool? == true)
             {
                 httpContext.Response.StatusCode = 403; //terminate request
             }

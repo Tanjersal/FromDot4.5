@@ -18,15 +18,19 @@ namespace Configuring
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
             if(env.IsDevelopment())
             {
-                //app.UseMvcWithDefaultRoute();
-                app.UseMiddleware<ErrorMiddleware>();
-                app.UseMiddleware<BrowserTypeMiddleware>();
-                app.UseMiddleware<ShortCircuitMiddleware>();
-                app.UseMiddleware<ContentMiddleware>();
+                app.UseDeveloperExceptionPage();
+                app.UseStatusCodePages();
+                app.UseBrowserLink();
             }
+            else
+            {
+                // exception handler for staging and prod env
+                app.UseExceptionHandler("/Home/Error");
+            }
+
+            app.UseStaticFiles();
 
             //setting up routing
             app.UseMvc(routes =>

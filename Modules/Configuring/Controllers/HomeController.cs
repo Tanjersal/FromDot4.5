@@ -16,12 +16,35 @@ namespace Configuring.Controllers
             uptimeService = uptime;
         }
 
-        public ViewResult Index()
+        /// <summary>
+        /// Index
+        /// </summary>
+        /// <param name="throwException"></param>
+        /// <returns></returns>
+        public ViewResult Index(bool throwException = false)
         {
+            if(throwException)
+            {
+                throw new NullReferenceException();
+            }
+
             return View(new Dictionary<string, string>
             {
-                ["Message"] = "This is the index action",
-                ["Uptime"] = $"{uptimeService.Uptime}ms"
+                ["Message"] = "Index action",
+                ["Uptime"] = $"{uptimeService.Uptime} ms"
+            });
+        }
+
+
+        /// <summary>
+        /// Error
+        /// </summary>
+        /// <returns></returns>
+        public ViewResult Error()
+        {
+            return View(nameof(Index), new Dictionary<string, string>
+            {
+                ["Message"] = "This is the error action"
             });
         }
     }

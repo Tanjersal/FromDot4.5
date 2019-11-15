@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Configuring.Infrastructure;
+﻿using Configuring.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Configuring
@@ -24,6 +19,7 @@ namespace Configuring
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             //app.UseMvcWithDefaultRoute();
+            app.UseMiddleware<ErrorMiddleware>();
             app.UseMiddleware<BrowserTypeMiddleware>();
             app.UseMiddleware<ShortCircuitMiddleware>();
             app.UseMiddleware<ContentMiddleware>();

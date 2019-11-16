@@ -4,16 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Configuring.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Configuring.Controllers
 {
     public class HomeController : Controller
     {
         private UptimeService uptimeService;
+        private ILogger<HomeController> Logger;
 
-        public HomeController(UptimeService uptime)
+
+        public HomeController(UptimeService uptime, ILogger<HomeController> logger)
         {
             uptimeService = uptime;
+            Logger = logger;
         }
 
         /// <summary>
@@ -23,6 +27,8 @@ namespace Configuring.Controllers
         /// <returns></returns>
         public ViewResult Index(bool throwException = false)
         {
+            Logger.LogDebug($"Handled {Request.Path} at uptime {uptimeService.Uptime} ms.");
+
             if(throwException)
             {
                 throw new NullReferenceException();

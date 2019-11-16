@@ -41,6 +41,10 @@ namespace Configuring
                     config.AddDebug();
                 })
                 .UseIISIntegration() // IIS and IIS express
+                .UseDefaultServiceProvider((context, options) => //register services
+                {
+                    options.ValidateScopes = context.HostingEnvironment.IsDevelopment();
+                })
                 .UseStartup<Startup>() // Startup and build
                 .Build();
         }

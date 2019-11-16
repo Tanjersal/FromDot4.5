@@ -18,15 +18,22 @@ namespace Configuring
             CreateWebHostBuilder(args).Run();
         }
 
-        //public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-        //    WebHost.CreateDefaultBuilder(args)
-        //        .UseStartup<Startup>();
-
         public static IWebHost CreateWebHostBuilder(string[] args)
         {
             return new WebHostBuilder()
                 .UseKestrel() // server kestrel
                 .UseContentRoot(Directory.GetCurrentDirectory()) // current directory
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true); //json config file
+
+                    config.AddEnvironmentVariables(); //env variables
+
+                    if(args != null)
+                    {
+                        config.AddCommandLine(args); // add config to read command line
+                    }
+                })
                 .UseIISIntegration() // IIS and IIS express
                 .UseStartup<Startup>() // Startup and build
                 .Build();

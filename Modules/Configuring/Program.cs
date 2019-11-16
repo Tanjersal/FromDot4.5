@@ -34,6 +34,12 @@ namespace Configuring
                         config.AddCommandLine(args); // add config to read command line
                     }
                 })
+                .ConfigureLogging((hostingContext, config) => //adding logging
+                {
+                    config.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                    config.AddConsole();
+                    config.AddDebug();
+                })
                 .UseIISIntegration() // IIS and IIS express
                 .UseStartup<Startup>() // Startup and build
                 .Build();

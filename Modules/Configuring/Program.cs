@@ -25,7 +25,11 @@ namespace Configuring
                 .UseContentRoot(Directory.GetCurrentDirectory()) // current directory
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
+                    var env = hostingContext.HostingEnvironment;
+
                     config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true); //json config file
+
+                    config.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true); //adding env specific config file
 
                     config.AddEnvironmentVariables(); //env variables
 

@@ -23,7 +23,31 @@ namespace Configuring
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<UptimeService>(); //shared instance throughout the app
+            services.AddMvc().AddMvcOptions(options => options.RespectBrowserAcceptHeader = true); //browser to read data how to want
+        }
+
+        /// <summary>
+        /// Development staging services configuration
+        /// </summary>
+        /// <param name="services"></param>
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            services.AddSingleton<UptimeService>();
             services.AddMvc();
+        }
+
+        /// <summary>
+        /// Development stage configure 
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
+        public void ConfigureDevelopment(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            app.UseDeveloperExceptionPage();
+            app.UseStatusCodePages();
+            app.UseBrowserLink();
+            app.UseStaticFiles();
+            app.UseMvcWithDefaultRoute();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

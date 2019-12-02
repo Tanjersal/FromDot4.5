@@ -28,10 +28,10 @@ namespace UrlsAndRoutes
             {
                 // most specific routes first
 
-                // custom segment id added 
+                // custom segment id added (optional)
                 routes.MapRoute(
                     name: "MyRoute",
-                    template: "{controller=Home}/{action=Index}/{id=DefaultId}"
+                    template: "{controller=Home}/{action=Index}/{id?}"
                 );
             });
         }

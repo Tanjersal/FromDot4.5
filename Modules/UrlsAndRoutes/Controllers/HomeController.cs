@@ -52,7 +52,7 @@ namespace UrlsAndRoutes.Controllers
                 Action = nameof(CustomVariables)
             };
 
-            r.data["Id"] = id;
+            r.data["Id"] = id ?? "<no value>";
 
             return View("Result", r);
         }

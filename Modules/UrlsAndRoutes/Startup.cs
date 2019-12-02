@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -36,18 +37,38 @@ namespace UrlsAndRoutes
                 //);
 
                 //routes constraint inline
-                routes.MapRoute(
-                    name: "MyRouteInline",
-                    template: "{controller=Home}/{action=Index}/{id:int?}"
-                );
+                //routes.MapRoute(
+                //    name: "MyRouteInline",
+                //    template: "{controller=Home}/{action=Index}/{id:int?}"
+                //);
 
                 //routes constraint explicit
+                //routes.MapRoute(
+                //    name: "MyRoutesExplicit",
+                //    template: "{controller}/{action}/{id?}",
+                //    defaults: new { controller = "Home", action = "Index" },
+                //    constraints: new { id = new IntRouteConstraint() }
+                // );
+
+                //combining constraints - inline alpha and min length 6
                 routes.MapRoute(
-                    name: "MyRoutesExplicit",
+                    name: "",
+                    template: "{controller=Home}/{action=Index}/{id:alpha:minLength(6)?}"
+                );
+
+                //combining constraints - explicits alpha and min length 6
+                routes.MapRoute(
+                    name: "",
                     template: "{controller}/{action}/{id?}",
                     defaults: new { controller = "Home", action = "Index" },
-                    constraints: new { id = new IntRouteConstraint() }
-                 );
+                    constraints: new { id = new CompositeRouteConstraint(
+                        new IRouteConstraint[]
+                        {
+                            new AlphaRouteConstraint(),
+                            new MinLengthRouteConstraint(6)
+                        }
+                    )}
+                );
             });
         }
     }

@@ -26,10 +26,15 @@ namespace UrlsAndRoutes
             app.UseStaticFiles();
             app.UseMvc(routes =>
             {
+                //routes.MapRoute(
+                //    name: "default", 
+                //    template: "{controller}/{action}", 
+                //    defaults: new { action = "Index" });
+
                 routes.MapRoute(
-                    name: "default", 
-                    template: "{controller}/{action}", 
-                    defaults: new { action = "Index" });
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}"
+                    );
             });
         }
     }

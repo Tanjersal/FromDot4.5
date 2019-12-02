@@ -31,6 +31,19 @@ namespace UrlsAndRoutes
                 //    template: "{controller}/{action}", 
                 //    defaults: new { action = "Index" });
 
+                // most specific routes first
+
+                routes.MapRoute(
+                    name: "ShopSchema2",
+                    template: "Shop/OldSchema",
+                    defaults: new {controller = "Home", action= "Index"}
+                    );
+
+                routes.MapRoute(
+                    name: "ShopSchema",
+                    template: "Shop/{action}",
+                    defaults: new { controller = "Home" });
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}"

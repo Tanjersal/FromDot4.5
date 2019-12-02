@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace UrlsAndRoutes
@@ -29,10 +30,24 @@ namespace UrlsAndRoutes
                 // most specific routes first
 
                 // custom segment id added (optional) - *for catchall
+                //routes.MapRoute(
+                //    name: "MyRoute",
+                //    template: "{controller=Home}/{action=Index}/{id?}/{*catchall}"
+                //);
+
+                //routes constraint inline
                 routes.MapRoute(
-                    name: "MyRoute",
-                    template: "{controller=Home}/{action=Index}/{id?}/{*catchall}"
+                    name: "MyRouteInline",
+                    template: "{controller=Home}/{action=Index}/{id:int?}"
                 );
+
+                //routes constraint explicit
+                routes.MapRoute(
+                    name: "MyRoutesExplicit",
+                    template: "{controller}/{action}/{id?}",
+                    defaults: new { controller = "Home", action = "Index" },
+                    constraints: new { id = new IntRouteConstraint() }
+                 );
             });
         }
     }

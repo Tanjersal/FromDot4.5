@@ -56,5 +56,25 @@ namespace UrlsAndRoutes.Controllers
 
             return View("Result", r);
         }
+
+
+        /// <summary>
+        /// Catchall segment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ViewResult List(string id)
+        {
+            Result r = new Result
+            {
+                Controller = nameof(HomeController),
+                Action = nameof(List)
+            };
+
+            r.data["Id"] = id;
+            r.data["catchall"] = RouteData.Values["catchall"];
+
+            return View("Result", r);
+        }
     }
 }

@@ -26,32 +26,12 @@ namespace UrlsAndRoutes
             app.UseStaticFiles();
             app.UseMvc(routes =>
             {
-                //routes.MapRoute(
-                //    name: "default", 
-                //    template: "{controller}/{action}", 
-                //    defaults: new { action = "Index" });
-
                 // most specific routes first
 
+                // custom segment id added 
                 routes.MapRoute(
-                    name: "ShopSchema2",
-                    template: "Shop/OldSchema",
-                    defaults: new {controller = "Home", action= "Index"}
-                    );
-
-                routes.MapRoute(
-                    name: "ShopSchema",
-                    template: "Shop/{action}",
-                    defaults: new { controller = "Home" });
-
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}"
-                    );
-
-                routes.MapRoute(
-                    name: "",
-                    template: "Public/{controller=Home}/{action=Index}"
+                    name: "MyRoute",
+                    template: "{controller=Home}/{action=Index}/{id=DefaultId}"
                     );
             });
         }

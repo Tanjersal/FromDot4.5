@@ -32,7 +32,7 @@ namespace UrlsAndRoutes
                 routes.MapRoute(
                     name: "MyRoute",
                     template: "{controller=Home}/{action=Index}/{id=DefaultId}"
-                    );
+                );
             });
         }
     }

@@ -21,5 +21,22 @@ namespace UrlsAndRoutes.Controllers
                 Action = nameof(Index)
             });
         }
+
+        /// <summary>
+        /// Custom variables segment
+        /// </summary>
+        /// <returns></returns>
+        public ViewResult CustomVariables()
+        {
+            Result r = new Result
+            {
+                Controller = nameof(HomeController),
+                Action = nameof(CustomVariables)
+            };
+
+            r.data["Id"] = RouteData.Values["Id"]; //routeData enables to access routing info
+
+            return View("Result", r);
+        }
     }
 }

@@ -26,7 +26,25 @@ namespace UrlsAndRoutes.Controllers
         /// Custom variables segment
         /// </summary>
         /// <returns></returns>
-        public ViewResult CustomVariables()
+        //public ViewResult CustomVariables()
+        //{
+        //    Result r = new Result
+        //    {
+        //        Controller = nameof(HomeController),
+        //        Action = nameof(CustomVariables)
+        //    };
+
+        //    r.data["Id"] = RouteData.Values["Id"]; //routeData enables to access routing info
+
+        //    return View("Result", r);
+        //}
+
+        /// <summary>
+        /// Custom variables segment - model binding
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ViewResult CustomVariables(string id)
         {
             Result r = new Result
             {
@@ -34,7 +52,7 @@ namespace UrlsAndRoutes.Controllers
                 Action = nameof(CustomVariables)
             };
 
-            r.data["Id"] = RouteData.Values["Id"]; //routeData enables to access routing info
+            r.data["Id"] = id;
 
             return View("Result", r);
         }

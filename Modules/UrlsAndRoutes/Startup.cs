@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.Extensions.DependencyInjection;
+using UrlsAndRoutes.Infrastructure;
 
 namespace UrlsAndRoutes
 {
@@ -51,23 +52,31 @@ namespace UrlsAndRoutes
                 // );
 
                 //combining constraints - inline alpha and min length 6
-                routes.MapRoute(
-                    name: "",
-                    template: "{controller=Home}/{action=Index}/{id:alpha:minLength(6)?}"
-                );
+                //routes.MapRoute(
+                //    name: "",
+                //    template: "{controller=Home}/{action=Index}/{id:alpha:minLength(6)?}"
+                //);
 
                 //combining constraints - explicits alpha and min length 6
+                //routes.MapRoute(
+                //    name: "",
+                //    template: "{controller}/{action}/{id?}",
+                //    defaults: new { controller = "Home", action = "Index" },
+                //    constraints: new { id = new CompositeRouteConstraint(
+                //        new IRouteConstraint[]
+                //        {
+                //            new AlphaRouteConstraint(),
+                //            new MinLengthRouteConstraint(6)
+                //        }
+                //    )}
+                //);
+
+                //applying the custom constraint - explicit
                 routes.MapRoute(
-                    name: "",
-                    template: "{controller}/{action}/{id?}",
+                    name:"default",
+                    template:"{controller}/{action}/{id?}",
                     defaults: new { controller = "Home", action = "Index" },
-                    constraints: new { id = new CompositeRouteConstraint(
-                        new IRouteConstraint[]
-                        {
-                            new AlphaRouteConstraint(),
-                            new MinLengthRouteConstraint(6)
-                        }
-                    )}
+                    constraints: new { id = new WeekdayConstraint() }
                 );
             });
         }

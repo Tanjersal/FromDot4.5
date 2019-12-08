@@ -30,5 +30,18 @@
             </tr>
         }
     </table>
+    <a asp-action="CustomVariable">This is an outgoing URL.</a>
+    <a asp-controller="Admin" asp-action="Index">
+        This targets another controller
+    </a>
+    <a asp-controller="Home" asp-action="Index" asp-route-id="Hello">
+        This is another outgoing URL with parameter
+    </a>
+    <a asp-controller="Home" asp-action="Index" asp-route-id="Hello" asp-protocol="https" asp-host="google.com" asp-fragment="test">
+        Fully qualified URL
+    </a>
+    <a asp-route="out">
+        Url using specific route
+    </a>
 </body>
 </html>

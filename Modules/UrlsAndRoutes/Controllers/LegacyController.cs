@@ -8,9 +8,9 @@ namespace UrlsAndRoutes.Controllers
 {
     public class LegacyController : Controller
     {
-        public ViewResult GetLegacyUrl(string url)
+        public ViewResult GetLegacyUrl(string legacyUrl)
         {
-            return View((object)url);
+            return View((object)legacyUrl);
         }
     }
 }

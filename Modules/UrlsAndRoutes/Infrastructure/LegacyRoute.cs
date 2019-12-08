@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Internal;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +15,17 @@ namespace UrlsAndRoutes.Infrastructure
         //urls
         private string[] _urls;
 
+        //MvcRoute
+        private IRouter MvcRoute;
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="targetUrls"></param>
-        public LegacyRoute(params string[] targetUrls)
+        public LegacyRoute(IServiceProvider serviceProvider, params string[] targetUrls)
         {
             _urls = targetUrls;
+            MvcRoute = serviceProvider.GetRequiredService<MvcRouteHandler>();
         }
 
 
@@ -38,21 +44,18 @@ namespace UrlsAndRoutes.Infrastructure
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public Task RouteAsync(RouteContext context)
+        public async Task RouteAsync(RouteContext context)
         {
             string RequestedUrl = context.HttpContext.Request.Path.Value.TrimEnd('/');
 
             if(_urls.Contains(RequestedUrl, StringComparer.OrdinalIgnoreCase))
             {
-                context.Handler = async ctx =>
-                {
-                    HttpResponse response = ctx.Response;
-                    byte[] bytes = Encoding.ASCII.GetBytes($"URL: { RequestedUrl }");
-                    await response.Body.WriteAsync(bytes, 0, bytes.Length);
-                }; 
-            }
+                context.RouteData.Values["controller"] = "Legacy"; //setting controller
+                context.RouteData.Values["action"] = "GetLegacyUrl"; //setting action
+                context.RouteData.Values["legacyUrl"] = RequestedUrl; //setting segment
 
-            return Task.CompletedTask;
+                await MvcRoute.RouteAsync(context); //handler directs request to respective controller
+            }
         }
     }
 }

@@ -44,7 +44,7 @@ namespace UrlsAndRoutes
                 //);
 
                 //registering custom routes handling
-                routes.Routes.Add(new LegacyRoute("/articles/windows_3.1_Overview.html", "Test old url"));
+                routes.Routes.Add(new LegacyRoute(app.ApplicationServices ,"/articles/windows_3.1_Overview.html", "Test old url"));
 
                 routes.MapRoute(
                     name: "default",

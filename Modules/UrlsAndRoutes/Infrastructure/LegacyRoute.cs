@@ -36,6 +36,16 @@ namespace UrlsAndRoutes.Infrastructure
         /// <returns></returns>
         public VirtualPathData GetVirtualPath(VirtualPathContext context)
         {
+            //outgoing url
+            if (context.Values.ContainsKey("legacyUrl"))
+            {
+                string url = context.Values["legacyUrl"] as string;
+                if(_urls.Contains(url))
+                {
+                    return new VirtualPathData(this, url);
+                }
+            }
+
             return null;
         }
 

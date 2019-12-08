@@ -47,5 +47,12 @@
     <p>
         Generating URLs: @Url.Action("CustomVariable", "Home", new { id = 100})
     </p>
+    <hr />
+    <a asp-route-legacyurl="/articles/windows_3.1_Overview.html" class="btn btn-primary">
+        This is an outgoing URL using custom routes
+    </a>
+    <p>
+        URL using custom routes: @Url.Action(null, null, new { legacyUrl = "/articles/windows_3.1_Overview.html" });
+    </p>
 </body>
 </html>

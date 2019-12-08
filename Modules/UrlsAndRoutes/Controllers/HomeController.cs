@@ -53,6 +53,7 @@ namespace UrlsAndRoutes.Controllers
             };
 
             r.data["Id"] = id ?? "<no value>";
+            r.data["Url"] = Url.Action("CustomVariables", "Home", new { id = 12 });
 
             return View("Result", r);
         }

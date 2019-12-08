@@ -22,6 +22,8 @@ namespace UrlsAndRoutes
             services.Configure<RouteOptions>(options =>
             {
                 options.ConstraintMap.Add("weekday", typeof(WeekdayConstraint));
+                options.LowercaseUrls = true;
+                options.AppendTrailingSlash = true;
             });
 
             services.AddMvc();
@@ -40,6 +42,9 @@ namespace UrlsAndRoutes
                 //    template: "App/Do{action}",
                 //    defaults: new {controller="Home"}
                 //);
+
+                //registering custom routes handling
+                routes.Routes.Add(new LegacyRoute("/articles/windows_3.1_Overview.html", "Test old url"));
 
                 routes.MapRoute(
                     name: "default",

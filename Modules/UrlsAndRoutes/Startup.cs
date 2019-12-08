@@ -43,6 +43,12 @@ namespace UrlsAndRoutes
                 //    defaults: new {controller="Home"}
                 //);
 
+                //registering areas routes
+                routes.MapRoute(
+                    name: "areas",
+                    template: "{area:exists}/{controller=Home}/{action=Index}"
+                );
+
                 //registering custom routes handling
                 routes.Routes.Add(new LegacyRoute(app.ApplicationServices ,"/articles/windows_3.1_Overview.html", "Test old url"));
 

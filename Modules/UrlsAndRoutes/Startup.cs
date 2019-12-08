@@ -33,64 +33,7 @@ namespace UrlsAndRoutes
             app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
-            app.UseMvc(routes =>
-            {
-            // most specific routes first
-
-            // custom segment id added (optional) - *for catchall
-            //routes.MapRoute(
-            //    name: "MyRoute",
-            //    template: "{controller=Home}/{action=Index}/{id?}/{*catchall}"
-            //);
-
-            //routes constraint inline
-            //routes.MapRoute(
-            //    name: "MyRouteInline",
-            //    template: "{controller=Home}/{action=Index}/{id:int?}"
-            //);
-
-            //routes constraint explicit
-            //routes.MapRoute(
-            //    name: "MyRoutesExplicit",
-            //    template: "{controller}/{action}/{id?}",
-            //    defaults: new { controller = "Home", action = "Index" },
-            //    constraints: new { id = new IntRouteConstraint() }
-            // );
-
-            //combining constraints - inline alpha and min length 6
-            //routes.MapRoute(
-            //    name: "",
-            //    template: "{controller=Home}/{action=Index}/{id:alpha:minLength(6)?}"
-            //);
-
-            //combining constraints - explicits alpha and min length 6
-            //routes.MapRoute(
-            //    name: "",
-            //    template: "{controller}/{action}/{id?}",
-            //    defaults: new { controller = "Home", action = "Index" },
-            //    constraints: new { id = new CompositeRouteConstraint(
-            //        new IRouteConstraint[]
-            //        {
-            //            new AlphaRouteConstraint(),
-            //            new MinLengthRouteConstraint(6)
-            //        }
-            //    )}
-            //);
-
-            //applying the custom constraint - explicit
-            //routes.MapRoute(
-            //    name:"default",
-            //    template:"{controller}/{action}/{id?}",
-            //    defaults: new { controller = "Home", action = "Index" },
-            //    constraints: new { id = new WeekdayConstraint() }
-            //);
-
-            //applying custom constraint - inline
-            routes.MapRoute(
-                name: "default",
-                template: "{controller=Home}/{action=Index}/{id:weekday?}"
-                );
-            });
+            app.UseMvcWithDefaultRoute();
         }
     }
 }
